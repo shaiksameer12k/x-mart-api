@@ -12,7 +12,7 @@ app.use(cors());
 app.use("/api/v1", userRouter);
 
 app.get("/",(req,res)=>{
-   res.send("Happy Development !")
+   res.send("Happy Development")
 })
 
 app.listen(PORT, () => {
