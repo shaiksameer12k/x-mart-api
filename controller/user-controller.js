@@ -1,5 +1,6 @@
 import { errorHandler } from "../utils/errorHandling.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
+import { connectDB } from "../config/DB_Connection.js";
 
 export const getUserController = errorHandler(async (req, res) => {
   const pool = await connectDB();
