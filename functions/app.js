@@ -4,7 +4,7 @@ import { userRouter } from "../routes/user-router.js";
 import { connectDB } from "../config/DB_Connection.js";
 import ServerlessHttp from "serverless-http";
 
-export const pool = await connectDB();
+export const pool =  connectDB();
 const app = express();
 const PORT = 4000;
 app.use(express.json());
