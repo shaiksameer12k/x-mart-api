@@ -1,4 +1,4 @@
-import { pool } from "../functions/app.js";
+import { pool } from "../server.js";
 import { errorHandler } from "../utils/errorHandling.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 

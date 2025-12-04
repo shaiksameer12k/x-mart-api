@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
-import { userRouter } from "../routes/user-router.js";
-import { connectDB } from "../config/DB_Connection.js";
+import { userRouter } from "./routes/user-router.js";
+import { connectDB } from "./config/DB_Connection.js";
 import ServerlessHttp from "serverless-http";
 
 export const pool =  connectDB();
