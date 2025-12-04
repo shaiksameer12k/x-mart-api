@@ -1,8 +1,9 @@
-import { pool } from "../server.js";
 import { errorHandler } from "../utils/errorHandling.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 
 export const getUserController = errorHandler(async (req, res) => {
+  const pool = await connectDB();
+  console.log("pool",pool)
   try {
     const users = await pool.request().query("select * from users");
     return res
@@ -17,6 +18,7 @@ export const getUserController = errorHandler(async (req, res) => {
 
 export const insertUserController = errorHandler(async (req, res) => {
   let { full_name, email, phone, city } = req.body;
+    const pool = await connectDB();
   try {
     const users = await pool
       .request()
@@ -36,6 +38,7 @@ export const insertUserController = errorHandler(async (req, res) => {
 
 export const updateUserController = errorHandler(async (req, res) => {
   let { user_id, full_name, email, phone, city } = req.body;
+    const pool = await connectDB();
   try {
     const users = await pool
       .request()
@@ -55,7 +58,8 @@ export const updateUserController = errorHandler(async (req, res) => {
 });
 
 export const deleteUserController = errorHandler(async (req, res) => {
-  let { user_id} = req.params;
+  let { user_id } = req.params;
+    const pool = await connectDB();
   try {
     const users = await pool
       .request()
