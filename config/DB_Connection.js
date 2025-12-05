@@ -7,7 +7,7 @@ export const connectDB = async () => {
       host: "gateway01.ap-southeast-1.prod.aws.tidbcloud.com",
       user: "4AYNTWX4MmZCroX.root",
       password: "HWYD3adBhUy7DrXG",
-      database: "test",
+      database: "xmart",
       port: 4000,
 
       ssl: {
