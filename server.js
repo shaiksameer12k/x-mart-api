@@ -3,10 +3,12 @@ import cors from "cors";
 import { userRouter } from "./routes/user-router.js";
 import { connectDB } from "./config/DB_Connection.js";
 
+await connectDB()
 const app = express();
 const PORT = 4000;
 app.use(express.json());
 app.use(cors());
+
 
 app.use("/api/v1", userRouter);
 

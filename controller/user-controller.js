@@ -3,8 +3,7 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { connectDB } from "../config/DB_Connection.js";
 
 export const getUserController = errorHandler(async (req, res) => {
-  const pool = await connectDB();
-  console.log("pool",pool)
+  const pool = await connectDB();  
   try {
     const users = await pool.request().query("select * from users");
     return res

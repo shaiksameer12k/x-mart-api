@@ -19,6 +19,6 @@ export const connectDB = async () => {
       return pool
     }
   } catch (error) {
-    console.log(`Error While Connect DB`);
+    console.log(`Error While Connect DB`, error);
   }
 };
