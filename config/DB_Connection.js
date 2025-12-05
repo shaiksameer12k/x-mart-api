@@ -1,24 +1,31 @@
-import sql from "mssql";
-
-const config = {
-  user: "sa",
-  password: "@lp@dmin123#@!",
-  server: "10.0.2.19",
-  database: "xmart",
-  options: {
-    encrypt: false,
-    trustServerCertificate: true,
-  },
-};
+import mysql from "mysql2/promise";
+import fs from "fs";
 
 export const connectDB = async () => {
   try {
-    const pool = await sql.connect(config);
-    if (pool._connected) {
-      console.log("SQL Server Connected Successfully");
-      return pool
-    }
+    const pool = mysql.createPool({
+      host: "gateway01.ap-southeast-1.prod.aws.tidbcloud.com",
+      user: "4AYNTWX4MmZCroX.root",
+      password: "HWYD3adBhUy7DrXG",
+      database: "test",
+      port: 4000,
+
+      ssl: {
+        // ca: fs.readFileSync("./certs/tidb-ca.pem"),
+         rejectUnauthorized: false 
+      },
+
+      waitForConnections: true,
+      connectionLimit: 10,
+      queueLimit: 0,
+    });
+
+    const conn = await pool.getConnection();
+    console.log("✅ TiDB Connected Successfully");
+    conn.release();
+
+    return pool;
   } catch (error) {
-    console.log(`Error While Connect DB`, error);
+    console.error("❌ DB Connection Error:", error);
   }
 };

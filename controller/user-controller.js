@@ -2,31 +2,33 @@ import { errorHandler } from "../utils/errorHandling.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { connectDB } from "../config/DB_Connection.js";
 
+
+// ✅ GET USERS
 export const getUserController = errorHandler(async (req, res) => {
-  const pool = await connectDB();  
+  const pool = await connectDB();
+
   try {
-    const users = await pool.request().query("select * from users");
+    const [users] = await pool.query("SELECT * FROM users");
+
     return res
       .status(200)
-      .json(
-        new ApiResponse(200, "Users fetched successfully", users.recordsets[0])
-      );
+      .json(new ApiResponse(200, "Users fetched successfully", users));
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
 
+
+// ✅ INSERT USER
 export const insertUserController = errorHandler(async (req, res) => {
   let { full_name, email, phone, city } = req.body;
-    const pool = await connectDB();
+  const pool = await connectDB();
+
   try {
-    const users = await pool
-      .request()
-      .input("full_name", full_name)
-      .input("email", email)
-      .input("phone", phone)
-      .input("city", city)
-      .execute("dbo.sp_insertUser");
+    await pool.query(
+      "CALL sp_insertUser(full_name, email, phone, city)",
+      [full_name, email, phone, city]
+    );
 
     return res
       .status(200)
@@ -36,18 +38,17 @@ export const insertUserController = errorHandler(async (req, res) => {
   }
 });
 
+
+// ✅ UPDATE USER
 export const updateUserController = errorHandler(async (req, res) => {
   let { user_id, full_name, email, phone, city } = req.body;
-    const pool = await connectDB();
+  const pool = await connectDB();
+
   try {
-    const users = await pool
-      .request()
-      .input("user_id", user_id)
-      .input("full_name", full_name)
-      .input("email", email)
-      .input("phone", phone)
-      .input("city", city)
-      .execute("dbo.sp_updateUser");
+    await pool.query(
+      "CALL sp_updateUser(user_id, full_name, email, phone, city)",
+      [user_id, full_name, email, phone, city]
+    );
 
     return res
       .status(200)
@@ -57,14 +58,17 @@ export const updateUserController = errorHandler(async (req, res) => {
   }
 });
 
+
+// ✅ DELETE USER
 export const deleteUserController = errorHandler(async (req, res) => {
   let { user_id } = req.params;
-    const pool = await connectDB();
+  const pool = await connectDB();
+
   try {
-    const users = await pool
-      .request()
-      .input("user_id", user_id)
-      .execute("dbo.sp_deleteUser");
+    await pool.query(
+      "CALL sp_deleteUser(user_id)",
+      [user_id]
+    );
 
     return res
       .status(200)
