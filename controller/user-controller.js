@@ -1,18 +1,20 @@
 import { errorHandler } from "../utils/errorHandling.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
-import { connectDB } from "../config/DB_Connection.js";
+import { pool } from "../config/DB_Connection.js";
 
 
 // ✅ GET USERS
 export const getUserController = errorHandler(async (req, res) => {
-  const pool = await connectDB();
+  // const pool = await connectDB();
+
+  console.log(await pool.query("SELECT * FROM employees"))
 
   try {
-    const [users] = await pool.query("SELECT * FROM users");
+    const {rows} = await pool.query("SELECT * FROM employees");
 
     return res
       .status(200)
-      .json(new ApiResponse(200, "Users fetched successfully", users));
+      .json(new ApiResponse(200, "Users fetched successfully",  rows));
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -22,7 +24,7 @@ export const getUserController = errorHandler(async (req, res) => {
 // ✅ INSERT USER
 export const insertUserController = errorHandler(async (req, res) => {
   let { full_name, email, phone, city } = req.body;
-  const pool = await connectDB();
+  // const pool = await connectDB();
 
   try {
     await pool.query(
@@ -42,7 +44,7 @@ export const insertUserController = errorHandler(async (req, res) => {
 // ✅ UPDATE USER
 export const updateUserController = errorHandler(async (req, res) => {
   let { user_id, full_name, email, phone, city } = req.body;
-  const pool = await connectDB();
+  // const pool = await connectDB();
 
   try {
     await pool.query(
@@ -62,7 +64,7 @@ export const updateUserController = errorHandler(async (req, res) => {
 // ✅ DELETE USER
 export const deleteUserController = errorHandler(async (req, res) => {
   let { user_id } = req.params;
-  const pool = await connectDB();
+  // const pool = await connectDB();
 
   try {
     await pool.query(

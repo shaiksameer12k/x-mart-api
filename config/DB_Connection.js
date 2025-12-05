@@ -1,31 +1,13 @@
-import mysql from "mysql2/promise";
-import fs from "fs";
+import pkg from "pg";
+const { Pool } = pkg;
 
-export const connectDB = async () => {
-  try {
-    const pool = mysql.createPool({
-      host: "gateway01.ap-southeast-1.prod.aws.tidbcloud.com",
-      user: "4AYNTWX4MmZCroX.root",
-      password: "HWYD3adBhUy7DrXG",
-      database: "xmart",
-      port: 4000,
+export const pool = new Pool({
+  host: "localhost",      // or your cloud host
+  user: "postgres",       // your DB username
+  password: "sameer12k",
+  database: "xmart",
+  port: 5432,
+  ssl: false              // true for cloud DBs
+});
 
-      ssl: {
-        // ca: fs.readFileSync("./certs/tidb-ca.pem"),
-         rejectUnauthorized: false 
-      },
 
-      waitForConnections: true,
-      connectionLimit: 10,
-      queueLimit: 0,
-    });
-
-    const conn = await pool.getConnection();
-    console.log("✅ TiDB Connected Successfully");
-    conn.release();
-
-    return pool;
-  } catch (error) {
-    console.error("❌ DB Connection Error:", error);
-  }
-};
