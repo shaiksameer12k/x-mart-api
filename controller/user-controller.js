@@ -18,10 +18,10 @@ export const getUserController = errorHandler(async (req, res) => {
 // ✅ INSERT USER
 export const insertUserController = errorHandler(async (req, res) => {
   let { full_name, email, phone, city } = req.body;
-  // const pool = await connectDB();
+  console.log("full_name, email, phone, city", full_name, email, phone, city);
 
   try {
-    await pool.query("select sp_insertUser(full_name, email, phone, city)", [
+    await pool.query("SELECT sp_insert_user($1, $2, $3, $4)", [
       full_name,
       email,
       phone,
@@ -43,7 +43,7 @@ export const updateUserController = errorHandler(async (req, res) => {
 
   try {
     await pool.query(
-      "select sp_updateUser(user_id, full_name, email, phone, city)",
+      "select sp_updateUser($1, $2, $3, $4, $5)",
       [user_id, full_name, email, phone, city]
     );
 
@@ -61,7 +61,7 @@ export const deleteUserController = errorHandler(async (req, res) => {
   // const pool = await connectDB();
 
   try {
-    await pool.query("select sp_deleteUser(user_id)", [user_id]);
+    await pool.query("select sp_deleteUser($1)", [user_id]);
 
     return res
       .status(200)
