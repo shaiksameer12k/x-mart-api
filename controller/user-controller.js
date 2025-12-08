@@ -5,12 +5,8 @@ import { pool } from "../config/DB_Connection.js";
 
 // ✅ GET USERS
 export const getUserController = errorHandler(async (req, res) => {
-  // const pool = await connectDB();
-
-  console.log(await pool.query("SELECT * FROM employees"))
-
   try {
-    const {rows} = await pool.query("SELECT * FROM employees");
+    const {rows} = await pool.query("SELECT * FROM users");
 
     return res
       .status(200)
