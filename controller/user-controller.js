@@ -2,20 +2,18 @@ import { errorHandler } from "../utils/errorHandling.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { pool } from "../config/DB_Connection.js";
 
-
 // ✅ GET USERS
 export const getUserController = errorHandler(async (req, res) => {
   try {
-    const {rows} = await pool.query("SELECT * FROM users");
+    const { rows } = await pool.query("SELECT * FROM users");
 
     return res
       .status(200)
-      .json(new ApiResponse(200, "Users fetched successfully",  rows));
+      .json(new ApiResponse(200, "Users fetched successfully", rows));
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
-
 
 // ✅ INSERT USER
 export const insertUserController = errorHandler(async (req, res) => {
@@ -23,10 +21,12 @@ export const insertUserController = errorHandler(async (req, res) => {
   // const pool = await connectDB();
 
   try {
-    await pool.query(
-      "CALL sp_insertUser(full_name, email, phone, city)",
-      [full_name, email, phone, city]
-    );
+    await pool.query("select sp_insertUser(full_name, email, phone, city)", [
+      full_name,
+      email,
+      phone,
+      city,
+    ]);
 
     return res
       .status(200)
@@ -36,7 +36,6 @@ export const insertUserController = errorHandler(async (req, res) => {
   }
 });
 
-
 // ✅ UPDATE USER
 export const updateUserController = errorHandler(async (req, res) => {
   let { user_id, full_name, email, phone, city } = req.body;
@@ -44,7 +43,7 @@ export const updateUserController = errorHandler(async (req, res) => {
 
   try {
     await pool.query(
-      "CALL sp_updateUser(user_id, full_name, email, phone, city)",
+      "select sp_updateUser(user_id, full_name, email, phone, city)",
       [user_id, full_name, email, phone, city]
     );
 
@@ -56,17 +55,13 @@ export const updateUserController = errorHandler(async (req, res) => {
   }
 });
 
-
 // ✅ DELETE USER
 export const deleteUserController = errorHandler(async (req, res) => {
   let { user_id } = req.params;
   // const pool = await connectDB();
 
   try {
-    await pool.query(
-      "CALL sp_deleteUser(user_id)",
-      [user_id]
-    );
+    await pool.query("select sp_deleteUser(user_id)", [user_id]);
 
     return res
       .status(200)
