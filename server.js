@@ -16,7 +16,7 @@ app.get("/api-docs", (req, res) => {
     <!DOCTYPE html>
     <html>
     <head>
-      <title>X-Mart API Docs</title>
+      <title>X-Mart API Docs </title>
 
       <link rel="stylesheet"
             href="https://unpkg.com/swagger-ui-dist/swagger-ui.css">
@@ -40,7 +40,7 @@ app.get("/api-docs", (req, res) => {
     </body>
     </html>
   `);
-});
+}); 
 
 app.get("/swagger.json", (req, res) => {
   res.json(swaggerSpec);
