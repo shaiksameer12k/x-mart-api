@@ -1,15 +1,18 @@
 import express from "express";
 import cors from "cors";
 import { userRouter } from "./routes/user-router.js";
-// import { connectDB } from "./config/DB_Connection.js";
+import { productsRouter } from "./routes/product-router.js";
+import { ordersRouter } from "./routes/order-route.js";
 
-// await connectDB();
 const app = express();
 const PORT = 4000;
 app.use(express.json());
 app.use(cors());
 
+// routes
 app.use("/api/v1", userRouter);
+app.use("/api/v1", productsRouter);
+app.use("/api/v1", ordersRouter);
 
 app.get("/", async (req, res) => {
   res.json({ message: "Happy Develpoment" });

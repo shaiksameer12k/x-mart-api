@@ -18,7 +18,7 @@ export const getUserController = errorHandler(async (req, res) => {
 // ✅ INSERT USER
 export const insertUserController = errorHandler(async (req, res) => {
   let { full_name, email, phone, city } = req.body;
-  console.log("full_name, email, phone, city", full_name, email, phone, city);
+  
 
   try {
     await pool.query("SELECT sp_insert_user($1, $2, $3, $4)", [
@@ -43,7 +43,7 @@ export const updateUserController = errorHandler(async (req, res) => {
 
   try {
     await pool.query(
-      "select sp_updateUser($1, $2, $3, $4, $5)",
+      "SELECT public.sp_update_user($1::INTEGER, $2::VARCHAR, $3::VARCHAR, $4::VARCHAR, $5::VARCHAR)",
       [user_id, full_name, email, phone, city]
     );
 
