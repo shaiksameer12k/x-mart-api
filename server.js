@@ -17,7 +17,7 @@ app.use(cors());
 
 
 app.get("/", async (req, res) => {
-  res.json({ message: "Happy Development Bro" });
+  res.json({ message: "Happy Development Bro ?" });
 });
 
 // routes
