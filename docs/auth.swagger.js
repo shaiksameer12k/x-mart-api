@@ -7,7 +7,7 @@
 
 /**
  * @swagger
- * /login:
+ * /api/v1/login:
  *   post:
  *     tags: [Auth]
  *     summary: Login user
@@ -19,7 +19,7 @@
  *           schema:
  *             type: object
  *             properties:
- *               email:
+ *               emailOrPhone:
  *                 type: string
  *               password:
  *                 type: string
