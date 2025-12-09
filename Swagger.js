@@ -9,15 +9,16 @@ const options = {
       version: "1.0.0",
       description: "API documentation for my Express backend",
     },
-    servers: [{ 
-      // url: "http://localhost:4000",
-       url : "https://x-mart-api.vercel.app/"
-        }],
+    servers: [
+      {
+        // url: "http://localhost:4000",
+        url: "https://x-mart-api.vercel.app",
+      },
+    ],
   },
 
   // Paths to files where Swagger comments exist
-  apis: ["./docs/*.js" ,"./routes/*.js", "./controllers/*.js", "./server.js"]
-
+  apis: ["./docs/*.js", "./routes/*.js", "./controllers/*.js", "./server.js"],
 };
 
 const swaggerSpec = swaggerJsdoc(options);
