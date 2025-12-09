@@ -10,7 +10,7 @@ const app = express();
 const PORT = 4000;
 
 // Swagger Endpoint
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+// app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.get("/api-docs", (req, res) => {
   res.send(`
