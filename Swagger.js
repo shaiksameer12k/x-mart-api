@@ -11,8 +11,8 @@ const options = {
     },
     servers: [
       {
-        url : process.env.API_BASE_URL
-        // url: "http://localhost:4000",
+        // url : process.env.API_BASE_URL
+        url: "http://localhost:4000",
         // url: "https://x-mart-api.vercel.app",
       },
     ],
