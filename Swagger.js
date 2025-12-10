@@ -1,5 +1,7 @@
 import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
+import dotenv from "dotenv";
+dotenv.config();
 
 const options = {
   definition: {
@@ -11,9 +13,21 @@ const options = {
     },
     servers: [
       {
-        // url : process.env.API_BASE_URL
-        url: "http://localhost:4000",
-        // url: "https://x-mart-api.vercel.app",
+        url: process.env.API_BASE_URL,
+      },
+    ],
+    components: {
+      securitySchemes: {
+        BearerAuth: {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
+        },
+      },
+    },
+    security: [
+      {
+        BearerAuth: [],
       },
     ],
   },
@@ -22,6 +36,10 @@ const options = {
   apis: ["./docs/*.js", "./routes/*.js", "./controllers/*.js", "./server.js"],
 };
 
+console.log(process.env.API_BASE_URL);
+
 const swaggerSpec = swaggerJsdoc(options);
 
 export { swaggerSpec, swaggerUi };
+
+// requestBody , quary, path

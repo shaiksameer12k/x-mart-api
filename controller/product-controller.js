@@ -38,7 +38,7 @@ export const insertProductsController = errorHandler(async (req, res) => {
 
     let { rows } = await pool.query(
       "SELECT sp_insert_product($1, $2, $3, $4, $5)",
-      [name, description, stock, price, category_id]
+      [name, description, price, stock, category_id]
     );
 
     let updated_product_id = rows[0]?.sp_insert_product;

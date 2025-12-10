@@ -8,9 +8,13 @@ import { productsRouter } from "./routes/product-router.js";
 import { ordersRouter } from "./routes/order-route.js";
 import { authRouter } from "./routes/auth-route.js";
 import { swaggerSpec, swaggerUi } from "./Swagger.js";
+import { generateToken } from "./utils/generateJWT.js";
+import { verifyToken } from "./utils/verifyJWT.js";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+// console.log(await generateToken())
 
 // Swagger Endpoint
 app.get("/api-docs", (req, res) => {
@@ -45,6 +49,7 @@ app.get("/", async (req, res) => {
 });
 
 // routes
+// for token validation add : verifyToken
 app.use("/api/v1", authRouter);
 app.use("/api/v1", userRouter);
 app.use("/api/v1", productsRouter);

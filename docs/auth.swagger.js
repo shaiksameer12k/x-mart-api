@@ -56,3 +56,15 @@
  *       200:
  *         description: Sign up successful
  */
+
+/**
+ * @swagger
+ * /api/v1/authLogin:
+ *  get:
+ *      tags: [JWT Auth]
+ *      summary: Generate JWT Token
+ *      description: Generate JWT Token
+ *      responses:
+ *          200:
+ *              description: Successfully Token Generated
+ */

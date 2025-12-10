@@ -32,13 +32,14 @@ export const postordersController = errorHandler(async (req, res) => {
 });
 
 // cart
-
 export const getUserCartController = errorHandler(async (req, res) => {
   let { user_id } = req.params;
+  console.log("user_id",user_id)
   try {
     let { rows } = await pool.query("select * from sp_getUserCart($1) ", [
       user_id,
     ]);
+    console.log("user_id",user_id)
     return res.json(new ApiResponse(200, "Successfully Orders Fetch", rows));
   } catch (error) {
     console.log(`getordersController : ${error}`);
