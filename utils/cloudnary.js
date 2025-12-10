@@ -3,9 +3,9 @@ import { v2 as cloudinary } from "cloudinary";
 export async function cloudinary_uploader(file_url, filename) {
   // Configuration
   cloudinary.config({
-    cloud_name: "dsuxhbmw3",
-    api_key: "753387319262962",
-    api_secret: "siRLNLoOZ4VZfr6Aj-Baf-MdVTU",
+    cloud_name: process.env.CLOUD_NAME,
+    api_key: process.env.API_KEY,
+    api_secret: process.env.API_SECRET,
   });
 
   // Upload an image
@@ -31,5 +31,5 @@ export async function cloudinary_uploader(file_url, filename) {
     height: 500,
   });
 
-  return { optimizeUrl, autoCropUrl };
+  return { optimizeUrl, autoCropUrl, uploadResult };
 }

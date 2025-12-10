@@ -1,3 +1,6 @@
+import dotenv from "dotenv";
+dotenv.config();
+
 import express from "express";
 import cors from "cors";
 import { userRouter } from "./routes/user-router.js";
@@ -7,11 +10,9 @@ import { authRouter } from "./routes/auth-route.js";
 import { swaggerSpec, swaggerUi } from "./Swagger.js";
 
 const app = express();
-const PORT = 4000;
+const PORT = process.env.PORT || 5000;
 
 // Swagger Endpoint
-// app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-
 app.get("/api-docs", (req, res) => {
   res.send(`
     <!DOCTYPE html>
