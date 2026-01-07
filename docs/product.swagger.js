@@ -18,34 +18,39 @@
  */
 
 /**
+ * /**
  * @swagger
  * /api/v1/product:
  *   post:
- *     tags: [Product]
+ *     tags: [Products]
  *     summary: Insert Product Item
  *     description: Insert Product Item.
  *     requestBody:
- *          requred: true
- *          content:
- *              multipart/form-data:
- *                  schema:
- *                      type: object
- *                      properties:
- *                          name:
- *                              type: string
- *                          description:
- *                              type: string
- *                          stock:
- *                              type: string
- *                          price:
- *                              type: string
- *                          category_id:
- *                              type: string
- *                          products:
- *                              type: file
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - name
+ *               - price
+ *             properties:
+ *               name:
+ *                 type: string
+ *               description:
+ *                 type: string
+ *               stock:
+ *                 type: integer
+ *               price:
+ *                 type: number
+ *               category_id:
+ *                 type: string
+ *               product:
+ *                 type: string
+ *                 format: binary
  *     responses:
  *       200:
- *         description: Products Inserted successfully
+ *         description: Product inserted successfully
  */
 
 /**

@@ -6,6 +6,7 @@ import fs, { unlink, unlinkSync } from "node:fs";
 import redis from "redis";
 import { redisClient } from "../utils/connectredis.js";
 
+
 // ✅ GET ProductsS
 export const getProductsController = errorHandler(async (req, res) => {
   try {
@@ -21,43 +22,52 @@ export const getProductsController = errorHandler(async (req, res) => {
 
 // ✅ INSERT Products
 export const insertProductsController = errorHandler(async (req, res) => {
-  let { name, description, stock, price, category_id } = req.body;
-  let { path, destination, fieldname, size, filename } = req.file;
-
-  console.log("req.file", req.file);
-
   try {
-    // let file_url = String(path).replaceAll("\\", "/");
+    if (!req.body) {
+      return res.status(400).json({ message: "Form data missing" });
+    }
 
-    // let { optimizeUrl, autoCropUrl } = await cloudinary_uploader(
-    //   file_url,
-    //   filename
-    // );
+    const { name, description, stock, price, category_id } = req.body;
 
-    // if (optimizeUrl) {
-    //   unlinkSync(path, (err) => {
-    //     if (err) throw err;
-    //     console.log(`successfully deleted ${path}`);
-    //   });
-    // }
+    if (!req.file) {
+      return res.status(400).json({ message: "Product image required" });
+    }
 
-    // let { rows } = await pool.query(
-    //   "SELECT sp_insert_product($1, $2, $3, $4, $5)",
-    //   [name, description, price, stock, category_id]
-    // );
+    let { filename , path , fieldname} = req.file;
 
-    // let updated_product_id = rows[0]?.sp_insert_product;
+    let file_url = String(path).replaceAll("\\", "/");
 
-    // await pool.query(
-    //   "INSERT INTO productImgs (product_id, url, fileName) VALUES ($1, $2, $3)",
-    //   [updated_product_id, optimizeUrl, fieldname] // or req.file.filename
-    // );
+    console.log("req.file", req.file);
+
+    let { optimizeUrl, autoCropUrl } = await cloudinary_uploader(
+      file_url,
+      filename
+    );
+
+    if (optimizeUrl) {
+      unlinkSync(path, (err) => {
+        if (err) throw err;
+        console.log(`successfully deleted ${path}`);
+      });
+    }
+
+    let { rows } = await pool.query(
+      "SELECT sp_insert_product($1, $2, $3, $4, $5)",
+      [name, description, price, stock, category_id]
+    );
+
+    let updated_product_id = rows[0]?.sp_insert_product;
+
+    await pool.query(
+      "INSERT INTO productImgs (product_id, url, fileName) VALUES ($1, $2, $3)",
+      [updated_product_id, optimizeUrl, fieldname] // or req.file.filename
+    );
 
     return res
       .status(200)
       .json(new ApiResponse(200, "Products Inserted successfully"));
   } catch (err) {
-    return res.status(500).json({ message: err });
+    return res.status(500).json({ message: err.message });
   }
 });
 
