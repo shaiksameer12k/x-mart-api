@@ -41,23 +41,24 @@ export const insertProductsController = errorHandler(async (req, res) => {
       });
     }
 
-    let { rows } = await pool.query(
-      "SELECT sp_insert_product($1, $2, $3, $4, $5)",
-      [name, description, price, stock, category_id]
-    );
+    // let { rows } = await pool.query(
+    //   "SELECT sp_insert_product($1, $2, $3, $4, $5)",
+    //   [name, description, price, stock, category_id]
+    // ); 
 
-    let updated_product_id = rows[0]?.sp_insert_product;
+    // let updated_product_id = rows[0]?.sp_insert_product;
 
-    await pool.query(
-      "INSERT INTO productImgs (product_id, url, fileName) VALUES ($1, $2, $3)",
-      [updated_product_id, optimizeUrl, fieldname] // or req.file.filename
-    );
+    // await pool.query(
+    //   "INSERT INTO productImgs (product_id, url, fileName) VALUES ($1, $2, $3)",
+    //   [updated_product_id, optimizeUrl, fieldname] // or req.file.filename
+    // );
 
     return res
       .status(200)
       .json(new ApiResponse(200, "Products Inserted successfully"));
+      
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json({ message: err });
   }
 });
 
