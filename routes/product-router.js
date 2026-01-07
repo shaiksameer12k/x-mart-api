@@ -16,7 +16,7 @@ productsRouter.get(
 );
 
 productsRouter.post(
-  "/products",
+  "/product",
   upload.single("products"),
   insertProductsController
 );

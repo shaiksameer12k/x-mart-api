@@ -19,9 +19,9 @@
 
 /**
  * @swagger
- * /api/v1/products:
+ * /api/v1/product:
  *   post:
- *     tags: [Products]
+ *     tags: [Product]
  *     summary: Insert Product Item
  *     description: Insert Product Item.
  *     requestBody:

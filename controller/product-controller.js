@@ -44,7 +44,7 @@ export const insertProductsController = errorHandler(async (req, res) => {
     // let { rows } = await pool.query(
     //   "SELECT sp_insert_product($1, $2, $3, $4, $5)",
     //   [name, description, price, stock, category_id]
-    // ); 
+    // );
 
     // let updated_product_id = rows[0]?.sp_insert_product;
 
@@ -56,9 +56,8 @@ export const insertProductsController = errorHandler(async (req, res) => {
     return res
       .status(200)
       .json(new ApiResponse(200, "Products Inserted successfully"));
-
   } catch (err) {
-   return res.status(500).json({ message: err });
+    return res.status(500).json({ message: err });
   }
 });
 
