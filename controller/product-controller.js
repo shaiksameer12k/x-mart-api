@@ -6,7 +6,6 @@ import fs, { unlink, unlinkSync } from "node:fs";
 import redis from "redis";
 import { redisClient } from "../utils/connectredis.js";
 
-
 // ✅ GET ProductsS
 export const getProductsController = errorHandler(async (req, res) => {
   try {
@@ -22,18 +21,18 @@ export const getProductsController = errorHandler(async (req, res) => {
 
 // ✅ INSERT Products
 export const insertProductsController = errorHandler(async (req, res) => {
+  if (!req.body) {
+    return res.status(400).json({ message: "Form data missing" });
+  }
+
+  const { name, description, stock, price, category_id } = req.body;
+
+  if (!req.file) {
+    return res.status(400).json({ message: "Product image required" });
+  }
   try {
-    if (!req.body) {
-      return res.status(400).json({ message: "Form data missing" });
-    }
 
-    const { name, description, stock, price, category_id } = req.body;
-
-    if (!req.file) {
-      return res.status(400).json({ message: "Product image required" });
-    }
-
-    let { filename , path , fieldname} = req.file;
+    let { filename, path, fieldname } = req.file;
 
     let file_url = String(path).replaceAll("\\", "/");
 
