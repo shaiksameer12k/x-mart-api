@@ -64,7 +64,6 @@ export const insertProductsController = errorHandler(async (req, res) => {
     return res
       .status(200)
       .json(new ApiResponse(200, "Products Inserted successfully"));
-
   } catch (err) {
     return res.status(500).json({ message: err.message });
   }
