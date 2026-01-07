@@ -27,19 +27,19 @@ export const insertProductsController = errorHandler(async (req, res) => {
   console.log("req.file", req.file);
 
   try {
-    let file_url = String(path).replaceAll("\\", "/");
+    // let file_url = String(path).replaceAll("\\", "/");
 
-    let { optimizeUrl, autoCropUrl } = await cloudinary_uploader(
-      file_url,
-      filename
-    );
+    // let { optimizeUrl, autoCropUrl } = await cloudinary_uploader(
+    //   file_url,
+    //   filename
+    // );
 
-    if (optimizeUrl) {
-      unlinkSync(path, (err) => {
-        if (err) throw err;
-        console.log(`successfully deleted ${path}`);
-      });
-    }
+    // if (optimizeUrl) {
+    //   unlinkSync(path, (err) => {
+    //     if (err) throw err;
+    //     console.log(`successfully deleted ${path}`);
+    //   });
+    // }
 
     // let { rows } = await pool.query(
     //   "SELECT sp_insert_product($1, $2, $3, $4, $5)",
