@@ -27,9 +27,9 @@ export const insertProductsController = errorHandler(async (req, res) => {
 
   const { name, description, stock, price, category_id } = req.body;
 
-  if (!req.file) {
-    return res.status(400).json({ message: "Product image required" });
-  }
+  // if (!req.file) {
+  //   return res.status(400).json({ message: "Product image required" });
+  // }
   try {
     // let { filename, path, fieldname } = req.file;
 
@@ -50,7 +50,7 @@ export const insertProductsController = errorHandler(async (req, res) => {
     // }
 
     let { rows } = await pool.query(
-      "SELECT sp_insert_product($1, $2, $3, $4, $5)",
+      "SELECT public.sp_insert_product($1, $2, $3, $4, $5)",
       [name, description, price, stock, category_id]
     );
 
@@ -64,6 +64,7 @@ export const insertProductsController = errorHandler(async (req, res) => {
     return res
       .status(200)
       .json(new ApiResponse(200, "Products Inserted successfully"));
+
   } catch (err) {
     return res.status(500).json({ message: err.message });
   }
