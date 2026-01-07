@@ -10,6 +10,7 @@ import { authRouter } from "./routes/auth-route.js";
 import { swaggerSpec, swaggerUi } from "./Swagger.js";
 import { generateToken } from "./utils/generateJWT.js";
 import { verifyToken } from "./utils/verifyJWT.js";
+import { redisConnection } from "./utils/connectredis.js";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -43,6 +44,8 @@ app.get("/swagger.json", (req, res) => {
 
 app.use(express.json());
 app.use(cors({ origin: "*" }));
+
+await redisConnection()
 
 app.get("/", async (req, res) => {
   res.json({ message: "Happy Development Bro ?" });

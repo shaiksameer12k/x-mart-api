@@ -3,6 +3,8 @@ import { ApiResponse } from "../utils/ApiResponse.js";
 import { pool } from "../config/DB_Connection.js";
 import { cloudinary_uploader } from "../utils/cloudnary.js";
 import fs, { unlink, unlinkSync } from "node:fs";
+import redis from "redis";
+import { redisClient } from "../utils/connectredis.js";
 
 // ✅ GET ProductsS
 export const getProductsController = errorHandler(async (req, res) => {
@@ -22,7 +24,7 @@ export const insertProductsController = errorHandler(async (req, res) => {
   let { name, description, stock, price, category_id } = req.body;
   let { path, destination, fieldname, size, filename } = req.file;
 
-  console.log("req.file",req.file)
+  console.log("req.file", req.file);
 
   try {
     let file_url = String(path).replaceAll("\\", "/");
