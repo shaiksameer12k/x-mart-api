@@ -31,36 +31,35 @@ export const insertProductsController = errorHandler(async (req, res) => {
     return res.status(400).json({ message: "Product image required" });
   }
   try {
+    // let { filename, path, fieldname } = req.file;
 
-    let { filename, path, fieldname } = req.file;
+    // let file_url = String(path).replaceAll("\\", "/");
 
-    let file_url = String(path).replaceAll("\\", "/");
+    // console.log("req.file", req.file);
 
-    console.log("req.file", req.file);
+    // let { optimizeUrl, autoCropUrl } = await cloudinary_uploader(
+    //   file_url,
+    //   filename
+    // );
 
-    let { optimizeUrl, autoCropUrl } = await cloudinary_uploader(
-      file_url,
-      filename
-    );
-
-    if (optimizeUrl) {
-      unlinkSync(path, (err) => {
-        if (err) throw err;
-        console.log(`successfully deleted ${path}`);
-      });
-    }
+    // if (optimizeUrl) {
+    //   unlinkSync(path, (err) => {
+    //     if (err) throw err;
+    //     console.log(`successfully deleted ${path}`);
+    //   });
+    // }
 
     let { rows } = await pool.query(
       "SELECT sp_insert_product($1, $2, $3, $4, $5)",
       [name, description, price, stock, category_id]
     );
 
-    let updated_product_id = rows[0]?.sp_insert_product;
+    // let updated_product_id = rows[0]?.sp_insert_product;
 
-    await pool.query(
-      "INSERT INTO productImgs (product_id, url, fileName) VALUES ($1, $2, $3)",
-      [updated_product_id, optimizeUrl, fieldname] // or req.file.filename
-    );
+    // await pool.query(
+    //   "INSERT INTO productImgs (product_id, url, fileName) VALUES ($1, $2, $3)",
+    //   [updated_product_id, optimizeUrl, fieldname] // or req.file.filename
+    // );
 
     return res
       .status(200)
